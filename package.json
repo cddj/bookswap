@@ -1,12 +1,12 @@
 {
-  "name": "brunch-app",
-  "description": "Brunch.io application",
+  "name": "bookswap",
+  "description": "App to people swap textbooks",
   "private": true,
-  "author": "Brunch",
+  "author": "CDDJJ",
   "version": "0.0.1",
   "repository": "",
   "scripts": {
-    "start": "brunch watch --server",
+    "start": "node server.js",
     "build": "brunch build --production"
   },
   "dependencies": {
