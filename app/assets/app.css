@@ -14,6 +14,7 @@ h1{
 
 body{
     text-align: center;
+    
 }
 
 form{
@@ -66,4 +67,10 @@ input {
     font-size: 15px;
     color: #777f91;
 }
-
+.column {
+    float:left;
+    width: 50%;
+}
+body {
+    background-color:linen;
+}
