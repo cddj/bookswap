@@ -21,7 +21,7 @@ If someone lists a book you want or if someone needs a book you'll have, we'll g
 
 ### Create 
 
-The webapp adds new books and users to their respective tables. The user can add books to their inventory and wishlist, adding it to the repective table. Generated matches are added to the matches table.
+The webapp adds new books and users to their respective tables. The user can add books to their inventory and wishlist, adding it to the repective table. Generated matches are added to the swap table.
 
 ### Read
 
@@ -29,7 +29,7 @@ The webapp displays the user's wishlist and inventory and uses SELECT querys to 
 
 ### Update
 
-The webapp updates the refresh token and expiration date periodically in the user table. Whenever a match is found, the owner and recipent both confirm that they still want to give/recieve the book. When they confirm, their response is changed from NULL to true in the matches table. If a user declines a match, the match is then their response is changed to false.
+Whenever a match is found, the owner and recipent both confirm that they still want to give/recieve the book. When they confirm, their response is changed from `NULL` to `True` in the matches table. If a user declines a match, the match is then their response is changed to `False`.
 
 ### Delete
 
