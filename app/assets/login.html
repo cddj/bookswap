@@ -27,7 +27,14 @@
             form.submit();
         }
         function submit(){
+            
             var form = document.getElementById("loginForm")
+            var errorMessage = document.getElementById("errorMessage");
+            
+            if(form.email.value == ""){
+                errorMessage.innerHTML = "You must enter an email";
+            }
+            
             form.submit();
         }
         
@@ -37,6 +44,7 @@
     <img id="book" src = "static/Book.png" alt="book">
   <h1 id="loginTitle"> BookSwap </h1>
 
+    
   <form id = "loginForm" name = "loginForm" action="/login" method = "post">
 
         <input type = "hidden" name = "action" value = "login"/>
@@ -53,6 +61,9 @@
     <button id="createButton" onclick = "create()"> Create Account </button>
 
   </form>
+    <div id = "errorMessage">
+    
+    </div>
     
     
     
