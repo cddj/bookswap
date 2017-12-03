@@ -19,21 +19,23 @@
 
   <form id = "loginForm" name = "loginForm" action="/login" method = "post">
 
-    <input type = "hidden" name = "action" value = "login"/>
+        <input type = "hidden" name = "action" value = "login"/>
 
-    <p>
-      <input type = "text" name= "email" value="" placeholder="Email" maxlength="255">
-    </p>
+        <p>
+            <input id="emailInput" type = "text" name= "email" value="" placeholder="Email" maxlength="255">
+        </p>
 
-    <p>
-      <input type="password" name="password" value="" placeholder="Password" maxlength="255">
-    </p>
+        <p>
+            <input id="passwordInput" type="password" name="password" value="" placeholder="Password" maxlength="255">
+        </p>
 
   </form>
     
     <button id="submitButton" type="button"> Submit </button>
     <button id="createButton" type="button"> Create Account </button>
+    
     <br><br>
+    
     <button id="about" type="button" onclick="info()">What is this?</button>
     <br><br><br>
     <div id="display" style="display: none">This web application is for University Missouri Students that are tired of paying too much money for textbooks every semester. <br>Create an account by putting in your email and a password and then clicking "Create Account". Once you have an account <br>you can search for a book that you need or submit a book you are trying to get rid of. The only public contact information <br>that can be found through the site are emails so you dont need to worry about not being able to contact the person with the book. </div>
