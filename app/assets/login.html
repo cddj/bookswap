@@ -12,6 +12,17 @@
         function info(){
             document.getElementById("display").style.display = "initial";
         }
+        
+        function create(){
+            var form = document.getElementById("loginForm")
+            form.action = "/register";
+            form.submit();
+        }
+        function submit(){
+            var form = document.getElementById("loginForm")
+            form.submit();
+        }
+        
     </script>
 </head>
 <body id="loginBody">
@@ -28,11 +39,13 @@
         <p>
             <input id="passwordInput" type="password" name="password" value="" placeholder="Password" maxlength="255">
         </p>
+      
+      <button id="submitButton" onclick = "submit()"> Submit </button>
+    <button id="createButton" onclick = "create()"> Create Account </button>
 
   </form>
     
-    <button id="submitButton" type="button"> Submit </button>
-    <button id="createButton" type="button"> Create Account </button>
+    
     
     <br><br>
     
