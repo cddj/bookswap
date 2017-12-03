@@ -8,6 +8,11 @@
   <script src="/vendor.js"></script>
   <script src="/app.js"></script>
   <script>require('initialize');</script>
+    <script>
+        function info(){
+            document.getElementById("display").style.display = "initial";
+        }
+    </script>
 </head>
 <body id="loginBody">
   <h1 id="loginTitle"> BookSwap </h1>
@@ -28,5 +33,10 @@
     
     <button id="submitButton" type="button"> Submit </button>
     <button id="createButton" type="button"> Create Account </button>
+    <br><br>
+    <button id="about" type="button" onclick="info()">What is this?</button>
+    <br><br><br>
+    <div id="display" style="display: none">This web application is for University Missouri Students that are tired of paying too much money for textbooks every semester. <br>Create an account by putting in your email and a password and then clicking "Create Account". Once you have an account <br>you can search for a book that you need or submit a book you are trying to get rid of. The only public contact information <br>that can be found through the site are emails so you dont need to worry about not being able to contact the person with the book. </div>
+    <br><br><br><br><br><br>
     
 </body>
