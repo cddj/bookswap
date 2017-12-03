@@ -1,6 +1,43 @@
-# Brunch + Babel/ES6
+# BookSwap
 
-This is a modern JS skeleton for [Brunch](http://brunch.io).
+A project made by: 
+* Dalton Burge 
+* Christian Cmehil-Warn 
+* Derek Howard 
+* Jonah Zukosky
+
+## What is BookSwap
+
+BookSwap is a webapp for college students to give and recieve textbooks they need. Simply, create an accoun, list books you don't want, and add books to your wishlist.
+If someone lists a book you want or if someone needs a book you'll have, we'll give you each other's email so you two can meet up and get and give the books you need.
+
+##Database Schema
+
+## Entity Relationship Diagram
+
+![ERD](download.png?raw=true)
+
+## CRUD Requirements
+
+### Create 
+
+The webapp adds new books and users to their respective tables. The user can add books to their inventory and wishlist, adding it to the repective table. Generated matches are added to the matches table.
+
+### Read
+
+The webapp displays the user's wishlist and inventory and uses SELECT querys to find matches.
+
+### Update
+
+The webapp updates the refresh token and expiration date periodically in the user table. Whenever a match is found, the owner and recipent both confirm that they still want to give/recieve the book. When they confirm, their response is changed from NULL to true in the matches table. If a user declines a match, the match is then their response is changed to false.
+
+### Delete
+
+Users can remove books from their wishlist and inventories, which deletes them from their respective tables. After a match is made and completed, the book entries will be deleted from the inventory and wishlist tables.
+
+## Video Demonstration
+
+[Video Demonstration](https://youtube.com)
 
 ## Installation
 
