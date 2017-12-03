@@ -15,7 +15,7 @@ If someone lists a book you want or if someone needs a book you'll have, we'll g
 
 ## Entity Relationship Diagram
 
-![ERD](download.png?raw=true)
+![ERD](erd.png?raw=true)
 
 ## CRUD Requirements
 
