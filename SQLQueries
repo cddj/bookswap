@@ -1,0 +1,15 @@
+//Your Books SQL Query
+SELECT author,title FROM book,inventory WHERE user_id = @user_id AND isbn = book_isbn;
+
+//Your Wishlist Query
+
+SELECT author,title FROM book,wishlist WHERE user_id = @user_id AND isbn = book_isbn;
+
+//Looking For a certain book
+
+SELECT * FROM inventory WHERE title LIKE '%@title%'
+SELECT author,title FROM book,inventory WHERE title LIKE '%@title%' AND isbn = book_isbn;
+
+//Getting rid of a book
+
+SELECT author, title FROM book WHERE title LIKE '%@title%';
