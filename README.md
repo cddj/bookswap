@@ -11,7 +11,60 @@ A project made by:
 BookSwap is a webapp for college students to give and recieve textbooks they need. Simply, create an accoun, list books you don't want, and add books to your wishlist.
 If someone lists a book you want or if someone needs a book you'll have, we'll give you each other's email so you two can meet up and get and give the books you need.
 
-##Database Schema
+## Database Schema
+
+```sql
+CREATE TABLE `user` (
+	`id` bigint NOT NULL AUTO_INCREMENT,
+	`email` varchar(255) NOT NULL,
+	`password_hash` varchar(255) NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `book` (
+	`isbn` bigint NOT NULL,
+	`title` varchar(255) NOT NULL,
+	`author` varchar(255) NOT NULL,
+	`publisher` varchar(255) NOT NULL,
+	`condition` varchar(255) NOT NULL,
+	`type` enum NOT NULL,
+	PRIMARY KEY (`isbn`)
+);
+
+CREATE TABLE `inventory` (
+	`user_id` bigint NOT NULL,
+	`book_isbn` bigint NOT NULL
+);
+
+CREATE TABLE `wishlist` (
+	`user_id` bigint NOT NULL,
+	`book_isbn` bigint NOT NULL
+);
+
+CREATE TABLE `swap` (
+	`owner_id` bigint NOT NULL,
+	`recipient_id` bigint NOT NULL,
+	`book_isbn` bigint NOT NULL,
+	`owner_agreed` bool DEFAULT 'NULL',
+	`recipient_agreed` bool DEFAULT 'NULL'
+);
+
+ALTER TABLE `inventory` ADD CONSTRAINT `inventory_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
+
+ALTER TABLE `inventory` ADD CONSTRAINT `inventory_fk1` FOREIGN KEY (`book_isbn`) REFERENCES `book`(`isbn`);
+
+ALTER TABLE `wishlist` ADD CONSTRAINT `wishlist_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
+
+ALTER TABLE `wishlist` ADD CONSTRAINT `wishlist_fk1` FOREIGN KEY (`book_isbn`) REFERENCES `book`(`isbn`);
+
+ALTER TABLE `swap` ADD CONSTRAINT `swap_fk0` FOREIGN KEY (`owner_id`) REFERENCES `user`(`id`);
+
+ALTER TABLE `swap` ADD CONSTRAINT `swap_fk1` FOREIGN KEY (`recipient_id`) REFERENCES `user`(`id`);
+
+ALTER TABLE `swap` ADD CONSTRAINT `swap_fk2` FOREIGN KEY (`book_isbn`) REFERENCES `book`(`isbn`);
+
+
+```
 
 ## Entity Relationship Diagram
 
