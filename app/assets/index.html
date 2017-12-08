@@ -8,6 +8,21 @@
 
     
     <link rel="stylesheet" type="text/css" href="static/app.css">
+    <script src="jquery-2.1.4.min.js"></script>
+    <script>
+        function search(){
+            var name = { search: $("#paramater").val()};
+            $.get('/searching',name, function(data));
+            
+            $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Swap?</th></tr>");
+            var i = 0;
+            while(data.books[i] != null){
+                $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button>Add</button></td></tr>");
+                ++i;
+            }
+            $('#yourBooks').append("</table>");
+        }
+    </script>
 </head>
 <body>
     
@@ -15,11 +30,11 @@
         
         <div>
             <h2>Looking for a Certain Book?</h2>
-            <form method="get" action="">
+<!--            <form method="get" action="">-->
                 <label for="bookSearch">Search the book's title here!<br></label>
-                <input class = "searchBox" name="bookSearch" type="text">
-                <button class = "searchButton" type="submit">Search</button>
-            </form>
+                <input class = "searchBox" name="bookSearch" type="text" id="paramater">
+                <button class = "searchButton" onClick="search()">Search</button>
+<!--            </form>-->
         </div>
         
         <div>
@@ -48,9 +63,10 @@
     <div id="yourBooks" class ="column">
         
 
+<!--
         <div>
             <h2>Your Books</h2>
-            <!--- Here goes the JavaScript List View populated with books that match the users id  -->
+            - Here goes the JavaScript List View populated with books that match the users id  
             
             <table>
                 <tr>
@@ -72,6 +88,7 @@
             </table>
             
         </div>
+-->
     </div>
     <!-- Kube JS + jQuery are used for some functionality, but are not required for the basic setup -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
