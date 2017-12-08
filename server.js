@@ -58,15 +58,15 @@ app.post('/register', (req, res) => {
   })
 })
 
-app.get('/login', () => {
-  res.sendFile('public/login.html')
+app.get('/login', (req, res) => {
+  res.sendFile('public/login.html', {root: __dirname})
 })
 
 app.get('*', (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect("/login");
   } else {
-    res.sendFile('public/index.html')
+    res.sendFile('public/index.html', {root: __dirname})
   }
 });
 
@@ -83,21 +83,21 @@ app.post('/add', (req, res) => {
 
 
 app.get('/user_inv', (req, res) => {
-  // var user_id = ????
+  var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,inventory WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
         res.send(rows.map(row => row.query_text))
         })
     })
 
 app.get('/user_wishlist', (req, res) => {
-  // var user_id = ????
+  var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,wishlist WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
         res.send(rows.map(row => row.query_text))
       })
   })
 
 app.post('/remove_inv', (req, res) => {
-  // var user_id = ????
+  var user_id = getUserID(req.email)
   var title = req.title
   connection.query('DELETE FROM inventory JOIN book ON isbn=book_isbn WHERE book.title =' + connection.escape(title) + ' AND user_id =' + connection.escape(user_id) + ' LIMIT 1;', function(error, rows) {
       res.send(rows.map(row => row.query_text))
@@ -105,7 +105,7 @@ app.post('/remove_inv', (req, res) => {
   })
 
 app.post('/remove_wish', (req, res) => {
-  // var user_id = ????
+  var user_id = getUserID(req.email)
   var title = req.title
   connection.query('DELETE FROM wishlist JOIN book ON isbn=book_isbn WHERE book.title =' + connection.escape(title) + ' AND user_id =' + connection.escape(user_id) + ' LIMIT 1;', function(error, rows) {
       res.send(rows.map(row => row.query_text))
@@ -136,7 +136,7 @@ app.post('/update_recip_agree', (req, res) => {
   })
 
 app.get('/searching', (req, res) => {
-  var title = req.param.name;
+  var title = req.param.bookName;
   connection.query('SELECT title,author FROM book WHERE title LIKE %' + connection.escape(title) +'%;', function(error, rows) {
     res.send(rows.map(row => row.query_text))
   })
@@ -182,12 +182,12 @@ passport.deserializeUser(function(id, done) {
 })
 
 // Initalize application
-app.use(session({ secret: "super secret bookswap magic with a little bit of alchemy" }));
+app.use(session({ secret: "super secret bookswap magic with a little bit of alchemy", resave : false, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/static', express.static("public/static"));
 
 
-app.listen(3306, () => {
-  console.log(chalk.green('bookswap started on port ' + chalk.bold('3306')))}); 
+app.listen(8080, () => {
+  console.log(chalk.green('bookswap started on port ' + chalk.bold('8080')))}); 
