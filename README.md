@@ -6,7 +6,16 @@ A project made by:
 * Derek Howard 
 * Jonah Zukosky
 
+
+# TODO
+
+ 1. Generate tables dynamically
+ 2. Make backend work
+ 3. Finish writing SQL
+ 4. Query SQL from search buttons
+
 ## What is BookSwap
+
 
 BookSwap is a webapp for college students to give and recieve textbooks they need. Simply, create an accoun, list books you don't want, and add books to your wishlist.
 If someone lists a book you want or if someone needs a book you'll have, we'll give you each other's email so you two can meet up and get and give the books you need.
