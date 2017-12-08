@@ -12,7 +12,7 @@ SELECT author,title FROM book,inventory WHERE title LIKE '%:title%' AND isbn = b
 SELECT author, title FROM book WHERE title LIKE '%:title%';
 
 //Delete from inventory/wishlist
-DELETE FROM inventory/wishlist JOIN book ON isbn = book_isbn WHERE book.title = :title AND user_id = :user_id LIMIT 1;
+DELETE FROM inventory/wishlist INNER JOIN book ON isbn = book_isbn WHERE book.title = :title AND user_id = :user_id LIMIT 1;
 
 //Update Agreement
 UPDATE swap SET owner_agreed/recipient_agreed = TRUE/FALSE WHERE owner_id = :user_id AND recipient_id = :recipient_id AND book_isbn  = :book_isbn;
@@ -25,3 +25,6 @@ INSERT INTO swap (owner_id, recipient_id, book_isbn)
 SELECT wishlist.user_id AS 'owner_id', inventory.user_id AS 'recipient_id', wishlist.book_isbn AS 'book_isbn'
 FROM wishlist, inventory
 WHERE wishlist.book_isbn = inventory.book_isbn;
+
+//Add book
+INSERT INTO book (:isbn, :title, :author);
