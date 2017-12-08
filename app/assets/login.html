@@ -11,12 +11,19 @@
     <script>
         function info(){
             var element = document.getElementById("display")
+            var button = document.getElementById("about")
             
             if(element.style.opacity == 0){
+                
+                button.textContent = "Close"
                 element.style.opacity = 1;
+                
              }
             else{
+                
+                button.textContent = "What is this?"
                 element.style.opacity = 0;
+                
             }
             
         }
