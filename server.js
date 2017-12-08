@@ -84,15 +84,15 @@ app.post('/add', (req, res) => {
 
 app.get('/user_inv', (req, res) => {
   // var user_id = ????
-  connection.query('SELECT author,title FROM book,inventory WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
-        res.send( rows.map(row => row.query_text))
+  connection.query('SELECT title,author FROM book,inventory WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
+        res.send(rows.map(row => row.query_text))
         })
     })
 
 app.get('/user_wishlist', (req, res) => {
   // var user_id = ????
-  connection.query('SELECT author,title FROM book,wishlist WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
-        res.send( rows.map(row => row.query_text))
+  connection.query('SELECT title,author FROM book,wishlist WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
+        res.send(rows.map(row => row.query_text))
       })
   })
 
@@ -100,7 +100,7 @@ app.post('/remove_inv', (req, res) => {
   // var user_id = ????
   var title = req.title
   connection.query('DELETE FROM inventory JOIN book ON isbn=book_isbn WHERE book.title =' + connection.escape(title) + ' AND user_id =' + connection.escape(user_id) + ' LIMIT 1;', function(error, rows) {
-      res.send( rows.map(row => row.query_text))
+      res.send(rows.map(row => row.query_text))
       })
   })
 
@@ -108,7 +108,7 @@ app.post('/remove_wish', (req, res) => {
   // var user_id = ????
   var title = req.title
   connection.query('DELETE FROM wishlist JOIN book ON isbn=book_isbn WHERE book.title =' + connection.escape(title) + ' AND user_id =' + connection.escape(user_id) + ' LIMIT 1;', function(error, rows) {
-      res.send( rows.map(row => row.query_text))
+      res.send(rows.map(row => row.query_text))
       })
   })
 
@@ -120,7 +120,7 @@ app.post('/update_owner_agree', (req, res) => {
   // var book_isbn = ????
   var title = req.title
   connection.query('UPDATE swap SET owner_agreed =' + connection.escape(value) +' WHERE owner_id =' + connection.escape(owner_id) + ' AND recipient_id = '+ connection.escape(recipient_id) + ' AND book_isbn  = ' + book_isbn + '; ', function(error, rows) {
-      res.send( rows.map(row => row.query_text))
+      res.send(rows.map(row => row.query_text))
       })
   })
 
@@ -131,11 +131,29 @@ app.post('/update_recip_agree', (req, res) => {
   // var book_isbn = ????
   var title = req.title
   connection.query('UPDATE swap SET recipient_agreed =' + connection.escape(value) +' WHERE owner_id =' + connection.escape(owner_id) + ' AND recipient_id = '+ connection.escape(recipient_id) + ' AND book_isbn  = ' + connection.escape(book_isbn) + '; ', function(error, rows) {
-      res.send( rows.map(row => row.query_text))
+      res.send(rows.map(row => row.query_text))
       })
   })
 
+app.get('/searching', (req, res) => {
+  var title = req.param.name;
+  connection.query('SELECT title,author FROM book WHERE title LIKE %' + connection.escape(title) +'%;', function(error, rows) {
+    res.send(rows.map(row => row.query_text))
+  })
+})
 
+app.post('/add_book', (req, res) => {
+  var isbn = req.param.isbn
+  var title = req.param.title
+  var author = req.param.author
+  connection.query('INSERT INTO book ('+ connection.escape(isbn) + ', '+ connection.escape(title) +', ' + connection.escape(author) +');')
+})
+
+function getUserID(email) {
+  connection.get('SELECT id FROM user WHERE email = '+ email, function(error, rows) {
+    res.send(rows.map(row => row.query_text))
+  })
+}
 
 // Setup Passport.js
 passport.use(new LocalStrategy({
@@ -157,7 +175,9 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   db.user(id, (user, status) => {
     done(err, user);
-    if (err) {}
+    if (err) {
+      console.log(err)
+    }
   })
 })
 
