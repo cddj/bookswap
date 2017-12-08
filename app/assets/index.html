@@ -12,15 +12,25 @@
     <script>
         function search(){
             var name = { search: $("#paramater").val()};
-            $.get('/searching',name, function(data));
+            $.get('/searching',name, function(data){
             
-            $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Swap?</th></tr>");
-            var i = 0;
-            while(data.books[i] != null){
-                $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button>Add</button></td></tr>");
-                ++i;
-            }
-            $('#yourBooks').append("</table>");
+                $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Swap?</th></tr>");
+                var i = 0;
+                while(data.books[i] != null){
+                    $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button onClick=\"add("+data.books[i].title+")\">Add</button></td></tr>");
+                    ++i;
+                }
+                $('#yourBooks').append("</table>");
+                
+            });
+        }
+        
+        function add(){
+            
+        }
+        
+        function have(){
+            
         }
     </script>
 </head>
