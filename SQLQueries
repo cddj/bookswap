@@ -28,3 +28,9 @@ WHERE wishlist.book_isbn = inventory.book_isbn;
 
 //Add book
 INSERT INTO book (:isbn, :title, :author);
+
+//Get email
+SELECT id FROM user WHERE email = :email
+
+//Search Existing books
+SELECT author,title FROM book WHERE title LIKE '%:title%'
