@@ -3,23 +3,16 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 03, 2017 at 05:50 AM
+-- Generation Time: Dec 08, 2017 at 07:24 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `bookswap`
 --
-DROP DATABASE IF EXISTS `bookswap`;
 CREATE DATABASE IF NOT EXISTS `bookswap` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `bookswap`;
 
@@ -32,11 +25,114 @@ USE `bookswap`;
 CREATE TABLE `book` (
   `isbn` bigint(20) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `publisher` varchar(255) NOT NULL,
-  `condition` varchar(255) NOT NULL,
-  `type` enum('hardcover','softcover','other') NOT NULL
+  `author` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `book`
+--
+
+INSERT INTO `book` (`isbn`, `title`, `author`) VALUES
+(9780025929814, 'Optional web-enabled concept', 'Jacquetta Blomefield'),
+(9780048660732, 'Grass-roots bandwidth-monitored pricing structure', 'Clarabelle Cattach'),
+(9780058315417, 'Public-key user-facing portal', 'Tressa Balazin'),
+(9780165407210, 'Fundamental foreground hardware', 'Dannye Spring'),
+(9780431225319, 'Triple-buffered multimedia info-mediaries', 'Gina Footer'),
+(9780464576228, 'Cross-group real-time concept', 'Ernestine O\'Curneen'),
+(9780676293623, 'Distributed value-added extranet', 'Minnnie Lukacs'),
+(9780768034189, 'Self-enabling non-volatile Graphical User Interface', 'Yoshi Eymer'),
+(9780878674374, 'Open-source executive knowledge user', 'Giacopo Sivewright'),
+(9780961653064, 'Streamlined didactic open architecture', 'Joycelin Menloe'),
+(9781016312141, 'Persevering real-time budgetary management', 'Max Comettoi'),
+(9781367898943, 'Proactive zero tolerance website', 'Marven Myerscough'),
+(9781409832225, 'Team-oriented holistic open architecture', 'Welbie Holley'),
+(9781463092252, 'Re-contextualized secondary policy', 'Fifi Sivyer'),
+(9781500311438, 'Re-engineered multi-state artificial intelligence', 'Mayer Sherme'),
+(9781517053321, 'Optimized client-server benchmark', 'Cal Bigg'),
+(9781545615393, 'Self-enabling radical definition', 'Emmott Cerie'),
+(9781558773554, 'Organic needs-based circuit', 'Cloe Pringley'),
+(9781819640953, 'Persevering bifurcated protocol', 'Bail Cullotey'),
+(9781882612765, 'Exclusive system-worthy support', 'Nigel Skirlin'),
+(9781894411813, 'Front-line 5th generation archive', 'Kathlin Scobbie'),
+(9781904415749, 'Focused tangible moratorium', 'Daveta Gilberthorpe'),
+(9782130070047, 'Right-sized composite capability', 'Derrek Agdahl'),
+(9782133711602, 'Digitized national challenge', 'Keene Elks'),
+(9782261290482, 'Robust clear-thinking throughput', 'Paulette Saben'),
+(9782330601393, 'Balanced uniform groupware', 'Hedwig Manwaring'),
+(9782387558480, 'Pre-emptive object-oriented superstructure', 'Sharity Tregent'),
+(9782515777875, 'Synchronised 24/7 application', 'Issi Birdwhistell'),
+(9782706778131, 'Synergized explicit application', 'Roth Wynch'),
+(9783032715357, 'Persevering content-based architecture', 'Gretna Slemming'),
+(9783039509768, 'Managed empowering interface', 'Marc Berthon'),
+(9783097053067, 'Up-sized client-driven function', 'Barbe Friberg'),
+(9783204824924, 'Reduced homogeneous application', 'Payton Mirrlees'),
+(9783205325529, 'Persevering holistic function', 'Heloise MacAnulty'),
+(9783249646796, 'Right-sized mission-critical benchmark', 'Kurtis Rawcliffe'),
+(9783328645801, 'Synergistic scalable customer loyalty', 'Chlo Heare'),
+(9783503307197, 'Implemented directional analyzer', 'Debor Serjent'),
+(9783646368536, 'Organic static Graphical User Interface', 'Rosella Shakesbye'),
+(9783920079479, 'Organic full-range help-desk', 'Alyosha Bridgett'),
+(9784068010836, 'Visionary full-range protocol', 'Alika McPhillips'),
+(9784415863726, 'Versatile asynchronous emulation', 'Clarey Petracchi'),
+(9784467674967, 'Organized bi-directional open architecture', 'Almire Floch'),
+(9784635809900, 'Seamless mission-critical matrices', 'Nani Stollenhof'),
+(9784675708850, 'Cross-platform mission-critical array', 'Fania Pobjay'),
+(9784714392118, 'Re-contextualized multi-tasking open system', 'Wynnie Raitie'),
+(9784891047825, 'Devolved cohesive instruction set', 'Ada McCreagh'),
+(9784912040538, 'Future-proofed discrete hardware', 'Berri Keedwell'),
+(9785183793420, 'Synergized human-resource encryption', 'Rea Scola'),
+(9785193430612, 'Open-source static encryption', 'Julian Silversmid'),
+(9785441071390, 'Intuitive bandwidth-monitored groupware', 'Casey Glassman'),
+(9785447565084, 'Realigned content-based ability', 'Hendrika Langdale'),
+(9785454158934, 'Proactive fault-tolerant product', 'Noby Gryglewski'),
+(9785479943256, 'Monitored tangible collaboration', 'Johnathan Flacke'),
+(9785539106485, 'Intuitive regional frame', 'Derwin Eke'),
+(9785676686536, 'Multi-channelled systematic access', 'Noreen Palk'),
+(9785795409405, 'Enterprise-wide even-keeled structure', 'Atlante Grimley'),
+(9785801368696, 'Configurable client-driven moderator', 'Nicolea Philson'),
+(9785801741031, 'Triple-buffered incremental pricing structure', 'Forbes Spittal'),
+(9785829958435, 'Programmable leading edge strategy', 'Morly Dahlback'),
+(9786063908552, 'Front-line neutral ability', 'Ivett MacTimpany'),
+(9786236957325, 'Customizable multimedia support', 'Frannie Bauman'),
+(9786312524946, 'Quality-focused 4th generation challenge', 'Thalia Boss'),
+(9786423591301, 'Multi-layered upward-trending collaboration', 'Brantley Purvess'),
+(9786611630034, 'Quality-focused client-server Graphic Interface', 'Lissi Laborda'),
+(9786612259425, 'Programmable impactful service-desk', 'Corinna Vollam'),
+(9786710853709, 'Sharable hybrid monitoring', 'Herta Lodford'),
+(9786776035699, 'Multi-lateral contextually-based artificial intelligence', 'Haley Murgatroyd'),
+(9787106540494, 'User-centric uniform challenge', 'Sandy Leaman'),
+(9787123608085, 'Adaptive tertiary knowledge user', 'Kenna Pentecost'),
+(9787186423540, 'Reverse-engineered 4th generation array', 'Vania Limon'),
+(9787229582555, 'Persevering motivating workforce', 'Carmelle Cornelisse'),
+(9787309996883, 'Right-sized asynchronous policy', 'Kermie Chappelow'),
+(9787320803672, 'Managed zero administration data-warehouse', 'Rhonda Lysons'),
+(9787526921460, 'Up-sized context-sensitive emulation', 'Rodger Burgill'),
+(9787627652638, 'Re-engineered client-driven protocol', 'Reba Pendlenton'),
+(9787671863332, 'Organic optimizing flexibility', 'Honor Levick'),
+(9787986119117, 'Open-architected radical task-force', 'Sonni Hrishanok'),
+(9788055079196, 'User-friendly global core', 'Wallie Shillan'),
+(9788298867406, 'Universal systemic standardization', 'Bourke Pearmain'),
+(9788350834360, 'Switchable needs-based complexity', 'Babbie Iacopo'),
+(9788354318897, 'Networked motivating customer loyalty', 'Raynell Atheis'),
+(9788356828806, 'Horizontal multi-tasking capability', 'Anabel MacElane'),
+(9788371138683, 'Automated zero tolerance moratorium', 'Clari Kennsley'),
+(9788531235979, 'Right-sized high-level focus group', 'Emmalynne Loyd'),
+(9788533015388, 'Versatile zero administration service-desk', 'Courtenay Dilleway'),
+(9788632619708, 'Assimilated context-sensitive application', 'Cecilio Chainey'),
+(9788916191715, 'Re-contextualized bandwidth-monitored complexity', 'Marcia Davitashvili'),
+(9788979569520, 'Distributed attitude-oriented contingency', 'Ellie Gaywood'),
+(9789097201552, 'Cross-group contextually-based instruction set', 'Sisile Willden'),
+(9789134441453, 'Open-architected human-resource policy', 'Torre Berdale'),
+(9789172881129, 'Visionary empowering frame', 'Shawna Kinforth'),
+(9789237220801, 'Customer-focused optimizing project', 'Tonie MacFayden'),
+(9789246174126, 'Organized hybrid migration', 'Bibi Prover'),
+(9789252058939, 'Multi-tiered impactful paradigm', 'Ricky Rankling'),
+(9789299917985, 'Advanced bandwidth-monitored portal', 'Gradey Klug'),
+(9789430078834, 'Polarised national benchmark', 'Kial Spatoni'),
+(9789509750982, 'Decentralized responsive frame', 'Madelin Abrahamian'),
+(9789603808626, 'Switchable heuristic website', 'Frederich Crawshay'),
+(9789662307092, 'Configurable needs-based structure', 'Leeanne Hultberg'),
+(9789691298514, 'Triple-buffered modular benchmark', 'Jamesy Whitehorn');
 
 -- --------------------------------------------------------
 
@@ -168,6 +264,112 @@ CREATE TABLE `swap` (
   `owner_agreed` tinyint(1) DEFAULT NULL,
   `recipient_agreed` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `swap`
+--
+
+INSERT INTO `swap` (`owner_id`, `recipient_id`, `book_isbn`, `owner_agreed`, `recipient_agreed`) VALUES
+(1, 100, 9781500311438, NULL, NULL),
+(2, 99, 9783205325529, NULL, NULL),
+(3, 98, 9789134441453, NULL, NULL),
+(4, 97, 9781882612765, NULL, NULL),
+(5, 96, 9787229582555, NULL, NULL),
+(6, 95, 9784467674967, NULL, NULL),
+(7, 94, 9784068010836, NULL, NULL),
+(8, 93, 9785193430612, NULL, NULL),
+(9, 92, 9788354318897, NULL, NULL),
+(10, 91, 9781558773554, NULL, NULL),
+(11, 90, 9785676686536, NULL, NULL),
+(12, 89, 9787320803672, NULL, NULL),
+(13, 88, 9785801741031, NULL, NULL),
+(14, 87, 9785454158934, NULL, NULL),
+(15, 86, 9780431225319, NULL, NULL),
+(16, 85, 9785479943256, NULL, NULL),
+(17, 84, 9782261290482, NULL, NULL),
+(18, 83, 9783039509768, NULL, NULL),
+(19, 82, 9784891047825, NULL, NULL),
+(20, 81, 9780961653064, NULL, NULL),
+(21, 80, 9787123608085, NULL, NULL),
+(22, 79, 9781409832225, NULL, NULL),
+(23, 78, 9789252058939, NULL, NULL),
+(24, 77, 9786776035699, NULL, NULL),
+(25, 76, 9786236957325, NULL, NULL),
+(26, 75, 9782706778131, NULL, NULL),
+(27, 74, 9780464576228, NULL, NULL),
+(28, 73, 9783249646796, NULL, NULL),
+(29, 72, 9782387558480, NULL, NULL),
+(30, 71, 9788371138683, NULL, NULL),
+(31, 70, 9789603808626, NULL, NULL),
+(32, 69, 9781894411813, NULL, NULL),
+(33, 68, 9789172881129, NULL, NULL),
+(34, 67, 9788531235979, NULL, NULL),
+(35, 66, 9785539106485, NULL, NULL),
+(36, 65, 9781016312141, NULL, NULL),
+(37, 64, 9785183793420, NULL, NULL),
+(38, 63, 9783204824924, NULL, NULL),
+(39, 62, 9781463092252, NULL, NULL),
+(40, 61, 9785795409405, NULL, NULL),
+(41, 60, 9786611630034, NULL, NULL),
+(42, 59, 9788350834360, NULL, NULL),
+(43, 58, 9788632619708, NULL, NULL),
+(44, 57, 9787309996883, NULL, NULL),
+(45, 56, 9782133711602, NULL, NULL),
+(46, 55, 9785441071390, NULL, NULL),
+(47, 54, 9780768034189, NULL, NULL),
+(48, 53, 9781545615393, NULL, NULL),
+(49, 52, 9788356828806, NULL, NULL),
+(50, 51, 9787986119117, NULL, NULL),
+(51, 50, 9780676293623, NULL, NULL),
+(52, 49, 9781517053321, NULL, NULL),
+(53, 48, 9780058315417, NULL, NULL),
+(54, 47, 9789097201552, NULL, NULL),
+(55, 46, 9786710853709, NULL, NULL),
+(56, 45, 9782130070047, NULL, NULL),
+(57, 44, 9786312524946, NULL, NULL),
+(58, 43, 9789246174126, NULL, NULL),
+(59, 42, 9783920079479, NULL, NULL),
+(60, 41, 9787106540494, NULL, NULL),
+(61, 40, 9783646368536, NULL, NULL),
+(62, 39, 9783032715357, NULL, NULL),
+(63, 38, 9789691298514, NULL, NULL),
+(64, 37, 9788916191715, NULL, NULL),
+(65, 36, 9784714392118, NULL, NULL),
+(66, 35, 9780025929814, NULL, NULL),
+(67, 34, 9781904415749, NULL, NULL),
+(68, 33, 9784912040538, NULL, NULL),
+(69, 32, 9789662307092, NULL, NULL),
+(70, 31, 9788533015388, NULL, NULL),
+(71, 30, 9783503307197, NULL, NULL),
+(72, 29, 9787627652638, NULL, NULL),
+(73, 28, 9786063908552, NULL, NULL),
+(74, 27, 9780048660732, NULL, NULL),
+(75, 26, 9786612259425, NULL, NULL),
+(76, 25, 9787186423540, NULL, NULL),
+(77, 24, 9785829958435, NULL, NULL),
+(78, 23, 9783328645801, NULL, NULL),
+(79, 22, 9782515777875, NULL, NULL),
+(80, 21, 9789237220801, NULL, NULL),
+(81, 20, 9789509750982, NULL, NULL),
+(82, 19, 9788979569520, NULL, NULL),
+(83, 18, 9780878674374, NULL, NULL),
+(84, 17, 9783097053067, NULL, NULL),
+(85, 16, 9788298867406, NULL, NULL),
+(86, 15, 9784415863726, NULL, NULL),
+(87, 14, 9789299917985, NULL, NULL),
+(88, 13, 9787526921460, NULL, NULL),
+(89, 12, 9785447565084, NULL, NULL),
+(90, 11, 9787671863332, NULL, NULL),
+(91, 10, 9784635809900, NULL, NULL),
+(92, 9, 9785801368696, NULL, NULL),
+(93, 8, 9786423591301, NULL, NULL),
+(94, 7, 9782330601393, NULL, NULL),
+(95, 6, 9781367898943, NULL, NULL),
+(96, 5, 9788055079196, NULL, NULL),
+(97, 4, 9789430078834, NULL, NULL),
+(98, 3, 9784675708850, NULL, NULL),
+(99, 2, 9781819640953, NULL, NULL),
+(100, 1, 9780165407210, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -415,10 +617,32 @@ ALTER TABLE `book`
   ADD PRIMARY KEY (`isbn`);
 
 --
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD KEY `inventory_fk0` (`user_id`),
+  ADD KEY `inventory_fk1` (`book_isbn`);
+
+--
+-- Indexes for table `swap`
+--
+ALTER TABLE `swap`
+  ADD UNIQUE KEY `swap_uniq_key` (`owner_id`,`recipient_id`,`book_isbn`),
+  ADD KEY `swap_fk1` (`recipient_id`),
+  ADD KEY `swap_fk2` (`book_isbn`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD KEY `wishlist_fk0` (`user_id`),
+  ADD KEY `wishlist_fk1` (`book_isbn`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -429,8 +653,28 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Constraints for dumped tables
+--
 
-ALTER TABLE `swap` ADD UNIQUE KEY `swap_uniq_key` (owner_id, recipient_id, book_isbn);
+--
+-- Constraints for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD CONSTRAINT `inventory_fk0` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `inventory_fk1` FOREIGN KEY (`book_isbn`) REFERENCES `book` (`isbn`);
+
+--
+-- Constraints for table `swap`
+--
+ALTER TABLE `swap`
+  ADD CONSTRAINT `swap_fk0` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `swap_fk1` FOREIGN KEY (`recipient_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `swap_fk2` FOREIGN KEY (`book_isbn`) REFERENCES `book` (`isbn`);
+
+--
+-- Constraints for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `wishlist_fk0` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `wishlist_fk1` FOREIGN KEY (`book_isbn`) REFERENCES `book` (`isbn`);
