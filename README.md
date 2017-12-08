@@ -25,9 +25,6 @@ CREATE TABLE `book` (
 	`isbn` bigint NOT NULL,
 	`title` varchar(255) NOT NULL,
 	`author` varchar(255) NOT NULL,
-	`publisher` varchar(255) NOT NULL,
-	`condition` varchar(255) NOT NULL,
-	`type` enum NOT NULL,
 	PRIMARY KEY (`isbn`)
 );
 
