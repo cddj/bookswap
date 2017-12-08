@@ -1,15 +1,27 @@
 //Your Books SQL Query
-SELECT author,title FROM book,inventory WHERE user_id = @user_id AND isbn = book_isbn;
+SELECT author,title FROM book,inventory WHERE user_id = :user_id AND isbn = book_isbn;
 
 //Your Wishlist Query
-
-SELECT author,title FROM book,wishlist WHERE user_id = @user_id AND isbn = book_isbn;
+SELECT author,title FROM book,wishlist WHERE user_id = :user_id AND isbn = book_isbn;
 
 //Looking For a certain book
-
-SELECT * FROM inventory WHERE title LIKE '%@title%'
-SELECT author,title FROM book,inventory WHERE title LIKE '%@title%' AND isbn = book_isbn;
+SELECT * FROM inventory WHERE title LIKE '%:title%'
+SELECT author,title FROM book,inventory WHERE title LIKE '%:title%' AND isbn = book_isbn;
 
 //Getting rid of a book
+SELECT author, title FROM book WHERE title LIKE '%:title%';
 
-SELECT author, title FROM book WHERE title LIKE '%@title%';
+//Delete from inventory/wishlist
+DELETE FROM inventory/wishlist JOIN book ON isbn = book_isbn WHERE book.title = :title AND user_id = :user_id LIMIT 1;
+
+//Update Agreement
+UPDATE swap SET owner_agreed/recipient_agreed = TRUE/FALSE WHERE owner_id = :user_id AND recipient_id = :recipient_id AND book_isbn  = :book_isbn;
+
+//Return agreed upon emails
+SELECT user.email AS "owner_email", user.email AS "recipient_email" FROM user WHERE swap.owner_id = id AND swap.recipient_id = id AND swap.owner_agreed = TRUE AND swap.recipient_agreed = TRUE;
+
+//Update Swap Table
+INSERT INTO swap (owner_id, recipient_id, book_isbn)
+SELECT wishlist.user_id AS 'owner_id', inventory.user_id AS 'recipient_id', wishlist.book_isbn AS 'book_isbn'
+FROM wishlist, inventory
+WHERE wishlist.book_isbn = inventory.book_isbn;
