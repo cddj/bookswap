@@ -1,6 +1,7 @@
 //routes.js
 // Routes
 
+
 app.post('/login', passport.authenticate('local', { successRedirect: '/',
                                                     failureRedirect: '/login?failed=true' }));
 
@@ -88,3 +89,4 @@ app.post('/update_recip_agree', (req, res) => {
       res.send( rows.map(row => row.query_text))
       })
   })
+
