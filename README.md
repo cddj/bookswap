@@ -96,7 +96,7 @@ Users can remove books from their wishlist and inventories, which deletes them f
 
 ## Video Demonstration
 
-[Video Demonstration](https://youtube.com)
+[Video Demonstration](https://www.youtube.com/watch?v=CPTf50d0w-4&feature=youtu.be)
 
 ## Installation
 
