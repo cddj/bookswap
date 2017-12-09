@@ -184,6 +184,21 @@ secure.post('/remove_wish', (req, res) => {
       })
   })
 
+secure.get('/add_inv/:title', (req, res) => {
+  var title = req.title
+  connection.query('INSERT INTO inventory (user_id, book_isbn) SELECT ' + req.user + ' , isbn AS \'book_isbn\' FROM book WHERE title =' 
+    + connection.escape(title) 
+    + ' LIMIT 1;')
+  })
+
+secure.get('/add_wishlist/:title', (req, res) => {
+  var title = req.title
+  connection.query('INSERT INTO wishlist (user_id, book_isbn) SELECT ' + req.user + ' , isbn AS \'book_isbn\' FROM book WHERE title =' 
+    + connection.escape(title) 
+    + ' LIMIT 1;')
+  })
+
+
 
 secure.post('/update_owner_agree', (req, res) => {
   var value = req.body.value;
@@ -221,7 +236,7 @@ secure.get('/book/:name', (req, res) => {
     if (!error && rows) {
       var objs = []
       for (var i = 0;i < rows.length; i++) {
-        objs.push({title: rows[i].title, author: rows[i].author});
+        objs.push({title: rows[i].title, author: rows[i].author},);
       }
       res.send(rows)
     } else {
