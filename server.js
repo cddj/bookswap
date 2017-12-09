@@ -136,8 +136,8 @@ secure.get('/', (req, res) => {
 
 secure.get('/user_inv', (req, res) => {
   var user_id = req.user
-  connection.query('SELECT title,author FROM book,inventory WHERE user_id =' 
-    + connection.escape(req.user) + ';', function(error, rows) {
+  connection.query('SELECT book.title,book.author FROM inventory JOIN book ON book.isbn = inventory.book_isbn WHERE user_id =' 
+    + req.user + ';', function(error, rows) {
           if (!error && rows) {
             var objs = []
             for (var i = 0;i < rows.length; i++) {
@@ -151,8 +151,8 @@ secure.get('/user_inv', (req, res) => {
     })
 
 secure.get('/user_wishlist', (req, res) => {
-  connection.query('SELECT title,author FROM book,wishlist WHERE user_id =' 
-    + connection.escape(req.user) + ';', function(error, rows) {
+  connection.query('SELECT book.title,book.author FROM wishlist JOIN book ON book.isbn = wishlist.book_isbn WHERE user_id =' 
+    + req.user + ';', function(error, rows) {
         if (!error && rows) {
           var objs = []
           for (var i = 0;i < rows.length; i++) {
@@ -215,17 +215,17 @@ secure.post('/update_recip_agree', (req, res) => {
   })
 
 secure.get('/book/:name', (req, res) => {
-  var title = req.name;
-  connection.query('SELECT title,author FROM book WHERE title LIKE %' 
-    + connection.escape(title) +'%;', function(error, rows) {
+  var title = req.params.name;
+  connection.query('SELECT title,author FROM book WHERE title LIKE \'%' 
+    + title +'%\';', function(error, rows) {
     if (!error && rows) {
       var objs = []
       for (var i = 0;i < rows.length; i++) {
         objs.push({title: rows[i].title, author: rows[i].author});
       }
-      res.send(JSON.stringify(objs))
+      res.send(rows)
     } else {
-      res.send('null')
+      res.send(error)
     }
   })
 })
