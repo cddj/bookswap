@@ -62,18 +62,22 @@ app.get('/login', (req, res) => {
   res.sendFile('public/login.html', {root: __dirname})
 })
 
-app.get('*', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.redirect("/login");
-  } else {
-    res.sendFile('public/index.html', {root: __dirname})
-  }
-});
+// app.get('*', (req, res) => {
+//   if (req.isAuthenticated()) {
+//     res.redirect("/login");
+//   } else {
+//     res.sendFile('public/index.html', {root: __dirname})
+//   }
+// });
 
 app.get('/user_inv', (req, res) => {
   var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,inventory WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
-        res.send(rows.map(row => row.query_text))
+          var objs = []
+          for (var i = 0;i < rows.length; i++) {
+            objs.push({title: rows[i].title, author: rows[i].author});
+          }
+          res.send(JSON.stringify(objs))
         })
     })
 
@@ -170,5 +174,5 @@ app.use(passport.session());
 app.use('/static', express.static("public/static"));
 
 
-app.listen(3306, () => {
-  console.log(chalk.green('bookswap started on port ' + chalk.bold('3306')))}); 
+app.listen(50000, () => {
+  console.log(chalk.green('bookswap started on port ' + chalk.bold('50000')))}); 
