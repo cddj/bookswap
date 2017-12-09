@@ -136,7 +136,7 @@ secure.get('/', (req, res) => {
 })
 
 secure.get('/user_inv', (req, res) => {
-  var user_id = getUserID(req.email)
+  var user_id = req.user
   connection.query('SELECT title,author FROM book,inventory WHERE user_id =' 
     + connection.escape(req.user) + 'AND isbn = book_isbn;', function(error, rows) {
           var objs = []
@@ -168,7 +168,7 @@ secure.post('/remove_inv', (req, res) => {
   })
 
 secure.post('/remove_wish', (req, res) => {
-  var user_id = getUserID(req.user.email)
+  var user_id = req.user
   var title = req.body.title
   connection.query('DELETE FROM wishlist JOIN book ON isbn=book_isbn WHERE book.title =' 
     + connection.escape(title) + ' AND user_id =' + connection.escape(req.user) 
