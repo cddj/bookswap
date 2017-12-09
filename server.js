@@ -5,6 +5,8 @@ var fs            = require('fs')
 var chalk         = require('chalk')
 var passport      = require('passport')
 var LocalStrategy = require('passport-local').Strategy
+var bcrypt        = require('bcrypt')
+var nconf         = require('nconf');
 var session       = require("express-session")
 var bodyParser    = require("body-parser");
 var mysql         = require('mysql')
@@ -19,6 +21,23 @@ var app = express();
 
 
 // Setup nconf to use command line options, then environment variables, than the configuration file
+nconf
+  .argv()
+  .env()
+  .file({ file: 'config.json' })
+  .defaults({
+    database: {
+      host: '127.0.0.1',
+      port: '3306',
+      user: 'root',
+      password: 'root',
+      name: 'bookswap'
+    },
+    server: {
+      port: '50000',
+      requestLogging: true
+    }
+  })
 // nconf
 //   .argv()
 //   .env()
@@ -39,38 +58,40 @@ var app = express();
 
 //Connect to database
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'bookswap'
+  host     : nconf.get('database:host'),
+  user     : nconf.get('database:user'),
+  port     : nconf.get('database:port'),
+  password : nconf.get('database:password'),
+  database : nconf.get('database:database')
 });
 
-connection.connect()
+try {
+  connection.connect()
+} catch (err) {
+  console.log(chalk.red('Failed to connect to database.'))
+  console.log(err)
+}
 
 app.post('/login', passport.authenticate('local', { successRedirect: '/',
                                                     failureRedirect: '/login?failed=true' }));
-
-app.post('/register', (req, res) => {
-  db.register(req.body.email, req.body.password, (user, status) => {
-    req.login(user, (err) => {
-      res.redirect('/')
-    })
-  })
-})
 
 app.get('/login', (req, res) => {
   res.sendFile('public/login.html', {root: __dirname})
 })
 
-// app.get('*', (req, res) => {
-//   if (req.isAuthenticated()) {
-//     res.redirect("/login");
-//   } else {
-//     res.sendFile('public/index.html', {root: __dirname})
-//   }
-// });
+// Enable secure routes
+let secure = express.Router()
+secure.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.sendFile(__dirname + '/public/login.html')
+  }
+});
+app.use(secure)
 
-app.get('/user_inv', (req, res) => {
+
+secure.get('/user_inv', (req, res) => {
   var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,inventory WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
           var objs = []
@@ -81,7 +102,7 @@ app.get('/user_inv', (req, res) => {
         })
     })
 
-app.get('/user_wishlist', (req, res) => {
+secure.get('/user_wishlist', (req, res) => {
   var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,wishlist WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
         var objs = []
@@ -92,46 +113,46 @@ app.get('/user_wishlist', (req, res) => {
       })
   })
 
-app.post('/remove_inv', (req, res) => {
+secure.post('/remove_inv', (req, res) => {
   var user_id = getUserID(req.email)
-  var title = req.title
+  var title = req.body.title
   connection.query('DELETE FROM inventory JOIN book ON isbn=book_isbn WHERE book.title =' + connection.escape(title) + ' AND user_id =' + connection.escape(user_id) + ' LIMIT 1;', function(error, rows) {
       res.send(rows.map(row => row.query_text))
       })
   })
 
-app.post('/remove_wish', (req, res) => {
-  var user_id = getUserID(req.email)
-  var title = req.title
+secure.post('/remove_wish', (req, res) => {
+  var user_id = getUserID(req.user.email)
+  var title = req.body.title
   connection.query('DELETE FROM wishlist JOIN book ON isbn=book_isbn WHERE book.title =' + connection.escape(title) + ' AND user_id =' + connection.escape(user_id) + ' LIMIT 1;', function(error, rows) {
       res.send(rows.map(row => row.query_text))
       })
   })
 
 
-app.post('/update_owner_agree', (req, res) => {
-  // var value = ????
-  // var owner_id = ????
-  // var recipient_id = ????
-  // var book_isbn = ????
+secure.post('/update_owner_agree', (req, res) => {
+  var value = req.body.value;
+  var owner_id = req.body.owner_id;
+  var recipient_id = req.body.recipient_id;
+  var book_isbn = req.body.book_isbn;
   var title = req.title
   connection.query('UPDATE swap SET owner_agreed =' + connection.escape(value) +' WHERE owner_id =' + connection.escape(owner_id) + ' AND recipient_id = '+ connection.escape(recipient_id) + ' AND book_isbn  = ' + book_isbn + '; ', function(error, rows) {
       res.send(rows.map(row => row.query_text))
       })
   })
 
-app.post('/update_recip_agree', (req, res) => {
-  // var value = ????  
-  // var owner_id = ????
-  // var recipient_id = ????
-  // var book_isbn = ????
+secure.post('/update_recip_agree', (req, res) => {
+  var value = req.body.value;
+  var owner_id = req.body.owner_id;
+  var recipient_id = req.body.recipient_id;
+  var book_isbn = req.body.book_isbn;
   var title = req.title
   connection.query('UPDATE swap SET recipient_agreed =' + connection.escape(value) +' WHERE owner_id =' + connection.escape(owner_id) + ' AND recipient_id = '+ connection.escape(recipient_id) + ' AND book_isbn  = ' + connection.escape(book_isbn) + '; ', function(error, rows) {
       res.send(rows.map(row => row.query_text))
       })
   })
 
-app.get('/searching', (req, res) => {
+secure.get('/q', (req, res) => {
   var title = req.param.bookName;
   connection.query('SELECT title,author FROM book WHERE title LIKE %' + connection.escape(title) +'%;', function(error, rows) {
     var objs = []
@@ -142,45 +163,67 @@ app.get('/searching', (req, res) => {
   })
 })
 
-function getUserID(email) {
-  connection.get('SELECT id FROM user WHERE email = '+ email, function(error, rows) {
-    res.send(rows.map(row => row.query_text))
+app.post('/register', (req, res) => {
+  let hashed_pass = bcrypt.hashSync(req.body.password);
+  let email = req.body.email;
+  connection.query('INSERT INTO user (email, password_hash) ' +
+                   'VALUES (' + connection.escape(email)+ ',' + hashed_pass + ')');
+  getUserID(email, (id) => {
+    let user = id;
+    user.email = email;
+    req.login(user, (err) => {
+      if (!err) {
+        res.redirect('/')
+      }
+    })
   })
+})
+
+
+function getUserID(email, callback) {
+  connection.get('SELECT id FROM user WHERE email = ' + connection.escape(email), function(error, rows) {
+    if (!error && rows.length) {
+      callback(rows[0].id);
+    }
+  });
 }
+
 
 // Setup Passport.js
 passport.use(new LocalStrategy({
     usernameField: 'email'
   },
-  function(email, password, done) {
-    connection.login(email, password, (user, status) => {
-      if (status != 'success') {
-        return done(null, false, { message: status })
-      } else {
-        return done(null, user)
+  function (email, password, done) {
+    let user = null;
+    connection.query('SELECT * FROM users WHERE email = ' + connection.escape(email) + ';', (error, rows) => {
+      if (!error && rows.length) {
+        bcrypt.compare(password, rows[0].password_hash, (err, success) => {
+          if (success) {
+            user = rows[0].id;
+            user.email = rows[0].email;
+          }
+        });
       }
-    })
+    });
+    return done(null, user);
   }
 ));
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  return done(null, JSON.stringify(user));
 });
-passport.deserializeUser(function(id, done) {
-  connection.user(id, (user, status) => {
-    done(err, user);
-    if (err) {
-      console.log(err)
-    }
-  })
+passport.deserializeUser(function(userSerialized, done) {
+  return done(null, JSON.parse(userSerialized))
 })
 
 // Initalize application
-app.use(session({ secret: "super secret bookswap magic with a little bit of alchemy", resave : false, saveUninitialized: true }));
+app.use(session({ secret: "super secret bookswap magic with a little bit of alchemy", resave : true, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/static', express.static("public/static"));
+app.use(express.static("public/"));
 
 
-app.listen(50000, () => {
-  console.log(chalk.green('bookswap started on port ' + chalk.bold('50000')))}); 
+
+
+app.listen(nconf.get('server:port'), () => {
+  console.log(chalk.green('bookswap started on port ' + chalk.bold(nconf.get('server:port'))))}); 

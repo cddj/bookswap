@@ -1,12 +1,12 @@
 {
   "database": {
     "host": "127.0.0.1",
-    "port": "3306",
+    "port": "8889",
     "user": "root",
     "name": "bookswap"
   },
   "server": {
-    "port": "5000",
+    "port": "50000",
     "requestLogging": true
   }
 }

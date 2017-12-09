@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BookSwap</title>
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="stylesheet" type="text/css" href="static/app.css">
+    <script src="jquery-2.1.4.min.js"></script>
+    <script>
+        function search(){
+            var name = { search: $("#paramater").val()};
+            $.get('/searching',name, function(data){
+            
+                $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Swap?</th></tr>");
+                var i = 0;
+                while(data.books[i] != null){
+                    $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button onClick=\"add("+data.books[i].title+")\">Add</button></td></tr>");
+                    ++i;
+                }
+                $('#yourBooks').append("</table>");
+                
+            });
+        }
+        
+        function add(){
+            
+        }
+        
+        function have(){
+            var name = { search: $("#paramater").val()};
+            $.get('/searching',name, function(data){
+            
+                $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Remove</th></tr>");
+                var i = 0;
+                while(data.books[i] != null){
+                    $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button onClick=\"remove("+data.books[i].title+")\">Remove</button></td></tr>");
+                    ++i;
+                }
+                $('#yourBooks').append("</table>");
+                
+            });
+        }
+        
+        function remove(){
+            
+        }
+    </script>
+</head>
+<body>
+    
+    <div id="searchBooks" class="column"> 
+        
+        <div>
+            <h2>Looking for a Certain Book?</h2>
+<!--            <form method="get" action="">-->
+                <label for="bookSearch">Search the book's title here!<br></label>
+                <input class = "searchBox" name="bookSearch" type="text" id="paramater">
+                <button class = "searchButton" onClick="search()">Search</button>
+<!--            </form>-->
+        </div>
+        
+        <div>
+        
+        <!-- will hold list of other books when searching -->
+            
+        </div>
+        
+        <br><br><br><br>
+        <div>
+            <h2>Have a Book You Are Trying to Get Rid of?</h2>
+            <form method="get" action="">
+                <label for="bookName">Type the title of the book you have here!<br></label>
+                <input class = "searchBox" type="text" name="bookName">
+                <button class = "searchButton" type="submit">Search</button>
+            </form>
+        </div>  
+        
+        
+    </div>
+        
+    
+    
+    
+    
+    <div id="yourBooks" class ="column">
+        
+
+<!--
+        <div>
+            <h2>Your Books</h2>
+            - Here goes the JavaScript List View populated with books that match the users id  
+            
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Swap?</th>
+                </tr>
+            </table>
+            
+            <br><br><br><br>
+            <h2>Your Wishlist</h2>
+            
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Swap?</th>
+                </tr>
+            </table>
+            
+        </div>
+-->
+    </div>
+    <!-- Kube JS + jQuery are used for some functionality, but are not required for the basic setup -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="assets/js/kube.js"></script>
+</body>
+</html>
