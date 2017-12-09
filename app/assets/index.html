@@ -17,8 +17,8 @@
             
                 $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Swap?</th></tr>");
                 var i = 0;
-                while(data.books[i] != null){
-                    $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button onClick=\"add("+data.books[i].title+")\">Add</button></td></tr>");
+                while(data[i] != null){
+                    $('#yourBooks').append("<tr><td>" + data[i].title + "</td><td>" + data[i].author + "</td><td><button onClick=\"add("+data[i].title+")\">Add</button></td></tr>");
                     ++i;
                 }
                 $('#yourBooks').append("</table>");

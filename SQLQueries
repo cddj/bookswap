@@ -31,3 +31,9 @@ SELECT id FROM user WHERE email = :email
 
 //Search Existing books
 SELECT author,title FROM book WHERE title LIKE '%:title%'
+
+//Add
+INSERT INTO wishlist (user_id, book_isbn)
+SELECT isbn AS 'book_isbn' FROM book WHERE title = 
+
+SELECT * FROM 

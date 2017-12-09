@@ -1,3 +1,9 @@
+th,
+td,
+tr {
+  border: 1px solid #000;
+  border-collapse: collapse;
+}
 body {
   background-color: #faf0e6;
   font-family: 'Cabin', sans-serif;

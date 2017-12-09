@@ -1,5 +1,4 @@
 Show registration  
-Show login
 Show adding book to wishlist (Implemented directional analyzer, Universal systemic standardization)
 Show adding book to inventory (Distributed attitude-oriented contingency, Persevering motivating workforce)
 Show removing book from inventory
