@@ -137,7 +137,7 @@ secure.get('/', (req, res) => {
 secure.get('/user_inv', (req, res) => {
   var user_id = req.user
   connection.query('SELECT title,author FROM book,inventory WHERE user_id =' 
-    + connection.escape(req.user) + 'AND isbn = book_isbn;', function(error, rows) {
+    + connection.escape(req.user) + ';', function(error, rows) {
           if (!error && rows) {
             var objs = []
             for (var i = 0;i < rows.length; i++) {
@@ -152,7 +152,7 @@ secure.get('/user_inv', (req, res) => {
 
 secure.get('/user_wishlist', (req, res) => {
   connection.query('SELECT title,author FROM book,wishlist WHERE user_id =' 
-    + connection.escape(req.user) + 'AND isbn = book_isbn;', function(error, rows) {
+    + connection.escape(req.user) + ';', function(error, rows) {
         if (!error && rows) {
           var objs = []
           for (var i = 0;i < rows.length; i++) {
