@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     
-    <link rel="stylesheet" type="text/css" href="static/app.css">
-    <script src="jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <script src="vendor.js"></script>
+    <script src="app.js"></script>
     <script>
         function search(){
-            var name = { search: $("#paramater").val()};
-            $.get('/searching',name, function(data){
+            var name = $("#paramater").val();
+            $.get('/book/' + name, function(data){
             
                 $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Swap?</th></tr>");
                 var i = 0;
@@ -117,6 +118,5 @@
     </div>
     <!-- Kube JS + jQuery are used for some functionality, but are not required for the basic setup -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="assets/js/kube.js"></script>
 </body>
 </html>

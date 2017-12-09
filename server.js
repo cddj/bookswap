@@ -1,6 +1,5 @@
 // Installed packages
 var express       = require('express')
-// var nconf         = require('nconf')
 var fs            = require('fs')
 var chalk         = require('chalk')
 var passport      = require('passport')
@@ -207,15 +206,19 @@ secure.post('/update_recip_agree', (req, res) => {
       })
   })
 
-secure.get('/q', (req, res) => {
-  var title = req.param.bookName;
+secure.get('/book/:name', (req, res) => {
+  var title = req.name;
   connection.query('SELECT title,author FROM book WHERE title LIKE %' 
     + connection.escape(title) +'%;', function(error, rows) {
-    var objs = []
-    for (var i = 0;i < rows.length; i++) {
-      objs.push({title: rows[i].title, author: rows[i].author});
+    if (!error && rows) {
+      var objs = []
+      for (var i = 0;i < rows.length; i++) {
+        objs.push({title: rows[i].title, author: rows[i].author});
+      }
+      res.send(JSON.stringify(objs))
+    } else {
+      res.send('null')
     }
-    res.send(JSON.stringify(objs))
   })
 })
 
