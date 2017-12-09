@@ -84,7 +84,11 @@ app.get('/user_inv', (req, res) => {
 app.get('/user_wishlist', (req, res) => {
   var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,wishlist WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
-        res.send(rows.map(row => row.query_text))
+        var objs = []
+        for (var i = 0;i < rows.length; i++) {
+          objs.push({title: rows[i].title, author: rows[i].author});
+        }
+        res.send(JSON.stringify(objs))
       })
   })
 
@@ -130,7 +134,11 @@ app.post('/update_recip_agree', (req, res) => {
 app.get('/searching', (req, res) => {
   var title = req.param.bookName;
   connection.query('SELECT title,author FROM book WHERE title LIKE %' + connection.escape(title) +'%;', function(error, rows) {
-    res.send(rows.map(row => row.query_text))
+    var objs = []
+    for (var i = 0;i < rows.length; i++) {
+      objs.push({title: rows[i].title, author: rows[i].author});
+    }
+    res.send(JSON.stringify(objs))
   })
 })
 
