@@ -72,11 +72,32 @@ try {
   console.log(err)
 }
 
+
 app.post('/login', passport.authenticate('local', { successRedirect: '/',
                                                     failureRedirect: '/login?failed=true' }));
 
 app.get('/login', (req, res) => {
   res.sendFile('public/login.html', {root: __dirname})
+})
+
+// Initalize application
+app.use(express.static(__dirname + '/public/static'));
+
+
+app.post('/register', (req, res) => {
+  let hashed_pass = bcrypt.hashSync(req.body.password);
+  let email = req.body.email;
+  connection.query('INSERT INTO user (email, password_hash) ' +
+                   'VALUES (' + connection.escape(email)+ ',' + hashed_pass + ')');
+  getUserID(email, (id) => {
+    let user = id;
+    user.email = email;
+    req.login(user, (err) => {
+      if (!err) {
+        res.redirect('/')
+      }
+    })
+  })
 })
 
 // Enable secure routes
@@ -89,7 +110,6 @@ secure.use((req, res, next) => {
   }
 });
 app.use(secure)
-
 
 secure.get('/user_inv', (req, res) => {
   var user_id = getUserID(req.email)
@@ -163,22 +183,6 @@ secure.get('/q', (req, res) => {
   })
 })
 
-app.post('/register', (req, res) => {
-  let hashed_pass = bcrypt.hashSync(req.body.password);
-  let email = req.body.email;
-  connection.query('INSERT INTO user (email, password_hash) ' +
-                   'VALUES (' + connection.escape(email)+ ',' + hashed_pass + ')');
-  getUserID(email, (id) => {
-    let user = id;
-    user.email = email;
-    req.login(user, (err) => {
-      if (!err) {
-        res.redirect('/')
-      }
-    })
-  })
-})
-
 
 function getUserID(email, callback) {
   connection.get('SELECT id FROM user WHERE email = ' + connection.escape(email), function(error, rows) {
@@ -215,12 +219,10 @@ passport.deserializeUser(function(userSerialized, done) {
   return done(null, JSON.parse(userSerialized))
 })
 
-// Initalize application
 app.use(session({ secret: "super secret bookswap magic with a little bit of alchemy", resave : true, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static("public/"));
 
 
 
