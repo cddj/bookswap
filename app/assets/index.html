@@ -30,6 +30,21 @@
         }
         
         function have(){
+            var name = { search: $("#paramater").val()};
+            $.get('/searching',name, function(data){
+            
+                $('#yourBooks').html("<table><tr><th>Title</th><th>Authors</th><th>Remove</th></tr>");
+                var i = 0;
+                while(data.books[i] != null){
+                    $('#yourBooks').append("<tr><td>" + data.books[i].title + "</td><td>" + data.books[i].author + "</td><td><button onClick=\"remove("+data.books[i].title+")\">Remove</button></td></tr>");
+                    ++i;
+                }
+                $('#yourBooks').append("</table>");
+                
+            });
+        }
+        
+        function remove(){
             
         }
     </script>
