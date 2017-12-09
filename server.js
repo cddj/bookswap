@@ -70,18 +70,6 @@ app.get('*', (req, res) => {
   }
 });
 
-app.post('/add', (req, res) => {
-  var isbn = req.isbn
-  var title = req.title
-  var author = req.author
-  connection.query('INSERT INTO book ('+ connection.escape(isbn) + ', '+ connection.escape(title) +', ' + connection.escape(author) + ')', function(error) {
-    if(error) {
-      console.log(error)
-    }
-  })
-})
-
-
 app.get('/user_inv', (req, res) => {
   var user_id = getUserID(req.email)
   connection.query('SELECT title,author FROM book,inventory WHERE user_id =' + connection.escape(user_id) + 'AND isbn = book_isbn;', function(error, rows) {
@@ -142,13 +130,6 @@ app.get('/searching', (req, res) => {
   })
 })
 
-app.post('/add_book', (req, res) => {
-  var isbn = req.param.isbn
-  var title = req.param.title
-  var author = req.param.author
-  connection.query('INSERT INTO book ('+ connection.escape(isbn) + ', '+ connection.escape(title) +', ' + connection.escape(author) +');')
-})
-
 function getUserID(email) {
   connection.get('SELECT id FROM user WHERE email = '+ email, function(error, rows) {
     res.send(rows.map(row => row.query_text))
@@ -160,7 +141,7 @@ passport.use(new LocalStrategy({
     usernameField: 'email'
   },
   function(email, password, done) {
-    db.login(email, password, (user, status) => {
+    connection.login(email, password, (user, status) => {
       if (status != 'success') {
         return done(null, false, { message: status })
       } else {
@@ -173,7 +154,7 @@ passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 passport.deserializeUser(function(id, done) {
-  db.user(id, (user, status) => {
+  connection.user(id, (user, status) => {
     done(err, user);
     if (err) {
       console.log(err)
@@ -189,5 +170,5 @@ app.use(passport.session());
 app.use('/static', express.static("public/static"));
 
 
-app.listen(8080, () => {
-  console.log(chalk.green('bookswap started on port ' + chalk.bold('8080')))}); 
+app.listen(3306, () => {
+  console.log(chalk.green('bookswap started on port ' + chalk.bold('3306')))}); 
